@@ -1,0 +1,93 @@
+
+plugins {
+    id 'org.jetbrains.kotlin.multiplatform'
+    id 'com.android.library'
+    id "com.google.devtools.ksp"
+}
+
+
+group = 'com.github.UstadMobile'
+version = '0.0.22'
+
+
+repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+kotlin {
+    jvm {
+        compilations.all {
+            kotlinOptions.jvmTarget = '1.8'
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnit()
+        }
+    }
+
+    js(BOTH) {
+
+    }
+
+    android {
+
+    }
+
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation "com.github.UstadMobile.door:door-runtime:$door_version"
+                compileOnly "com.github.UstadMobile.door:door-annotations:$door_version"
+                implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation kotlin('test-common')
+                implementation kotlin('test-annotations-common')
+            }
+        }
+
+        jsMain {
+
+        }
+
+        androidMain {
+            dependencies {
+                implementation "androidx.room:room-runtime:$version_android_room"
+                implementation "androidx.room:room-ktx:$version_android_room"
+                implementation "androidx.lifecycle:lifecycle-livedata-ktx:$version_androidx_lifecycle"
+                implementation "androidx.paging:paging-runtime:$version_androidx_paging"
+            }
+        }
+    }
+}
+
+android {
+    compileSdkVersion 32
+    sourceSets.main.manifest.srcFile('src/androidMain/AndroidManifest.xml')
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 32
+    }
+
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile) {
+        kotlinOptions {
+            jvmTarget = "1.8"
+        }
+    }
+
+}
+
+dependencies {
+    kspJvm "com.github.UstadMobile.door:door-compiler:$door_version"
+    kspJs "com.github.UstadMobile.door:door-compiler:$door_version"
+    kspAndroid "com.github.UstadMobile.door:door-compiler:$door_version"
+    kspAndroid "androidx.room:room-compiler:$version_android_room"
+}

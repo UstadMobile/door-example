@@ -1,0 +1,36 @@
+
+group 'com.github.UstadMobile.doorexample'
+version '0.0.1'
+
+buildscript {
+
+    ext.kotlin_version = "1.7.10"
+    ext.ksp_version = "1.0.6"
+    ext.door_version = "0.0.62j"
+    ext.version_android_room = "2.4.2"
+    ext.coroutines_version = "1.6.3"
+    ext.version_androidx_lifecycle = "2.4.1"
+    ext.version_androidx_paging = "2.1.2"
+    ext.version_ktor = "2.1.1"
+
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:4.2.2"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+        classpath "com.google.devtools.ksp:com.google.devtools.ksp.gradle.plugin:$kotlin_version-$ksp_version"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        mavenLocal()
+    }
+}
